@@ -1,0 +1,40 @@
+pipeline {
+    agent any
+    stages {
+        stage ("install") {
+           steps {
+             nodejs('NodeJs_Builder') {
+                sh "npm i"
+              }
+           }
+        }
+        stage ("build") {
+           steps {
+             nodejs('NodeJs_Builder') {
+                sh "npm run build"
+              }
+           }
+        }
+        stage ("compress") {
+           steps {
+                script {
+               
+                   sh 'tar czf internatinalization.tar.gz build'
+                   
+                }
+           }
+        }
+         stage ("copy to var") {
+           steps {
+                script {
+               
+                   dir("/") {
+                        sh "ls -la"
+                    }
+                   
+                }
+           }
+        }       
+
+    }
+}
